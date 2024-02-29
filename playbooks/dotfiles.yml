@@ -1,0 +1,11 @@
+- name: Set up dotfiles.
+  hosts: workstation
+
+  tasks:
+    - name: Run tasks for user {{ user }}.
+      become: true
+      become_user: "{{ user }}"
+      block:
+        - name: Include role dotfiles.
+          ansible.builtin.include_role:
+            name: palekiwi.dotfiles

@@ -1,0 +1,8 @@
+---
+flatpak_packages:
+  - { state: present, method: user, remote: flathub, filesystem: home, name: com.google.chrome }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.kde.okular }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.mozilla.thunderbird }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.signal.signal }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.videolan.vlc }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.goldendict.goldendict }

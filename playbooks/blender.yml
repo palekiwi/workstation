@@ -1,0 +1,68 @@
+---
+- name: Install Blender.
+  hosts: localhost
+  connection: local
+
+  vars:
+    user: pl
+    blender_version: "3.6.9"
+    blender_dir: "/home/{{ user }}/apps/blender"
+    blender_dest: "{{ blender_dir }}/blender-{{ blender_version }}-linux-x64"
+    blender_current: "{{ blender_dir }}/current"
+    blender_config: "/home/{{ user }}/Nextcloud/AppData/config/blender"
+
+  tasks:
+    - name: Ensure a directory for blender exists.
+      ansible.builtin.file:
+        state: directory
+        path: "{{ blender_dir }}"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: "0755"
+
+    - name: Check if requested version is already present.
+      ansible.builtin.stat:
+        path: "{{ blender_dest }}"
+      register: blender_dest_result
+
+    - name: Ensure requested version is present.
+      when: not blender_dest_result.stat.exists
+      block:
+        - name: Download blender archive version {{ blender_version }}.
+          ansible.builtin.get_url:
+            url: "https://mirrors.iu13.net/blender/release/\
+                  Blender{{ (blender_version | split('.'))[0:2] | join('.') }}/blender-{{ blender_version }}-linux-x64.tar.xz"
+            dest: /tmp/blender-{{ blender_version }}-linux-x64.tar.xz
+            mode: "0644"
+
+        - name: Unarchive blender.
+          ansible.builtin.unarchive:
+            src: /tmp/blender-{{ blender_version }}-linux-x64.tar.xz
+            dest: "{{ blender_dir }}"
+            creates: "{{ blender_dest }}/blender"
+            remote_src: true
+
+    - name: Ensure blender.desktop file exists.
+      ansible.builtin.copy:
+        src: "{{ blender_dest }}/blender.desktop"
+        dest: "~/.local/share/applications/blender.desktop"
+        remote_src: true
+        mode: "0644"
+
+    - name: Link current version to {{ blender_version }}.
+      ansible.builtin.file:
+        state: link
+        src: "{{ blender_dest }}"
+        dest: "{{ blender_current }}"
+
+    - name: Edit desktop entry to point to current version {{ blender_version }}.
+      ansible.builtin.lineinfile:
+        path: "~/.local/share/applications/blender.desktop"
+        regexp: '^Exec='
+        line: "Exec={{ blender_current }}/blender %f"
+
+    - name: Link config directory.
+      ansible.builtin.file:
+        state: link
+        src: "{{ blender_config }}"
+        dest: "~/.config/blender"

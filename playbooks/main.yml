@@ -1,0 +1,46 @@
+---
+- name: Import playbook security.
+  ansible.builtin.import_playbook: security.yml
+  tags: security
+
+- name: Import playbook gpg.
+  ansible.builtin.import_playbook: gpg.yml
+  tags: gpg
+
+- name: Import playbook dotfiles.
+  ansible.builtin.import_playbook: dotfiles.yml
+  tags: dotfiles
+
+- name: Import playbook repos.
+  ansible.builtin.import_playbook: repos.yml
+  tags: repos
+
+- name: Import playbook autologin.
+  ansible.builtin.import_playbook: autologin.yml
+  tags: autologin
+
+- name: Import playbook pcspeaker.
+  ansible.builtin.import_playbook: pcspkr.yml
+  tags: pcspkr
+
+- name: Import playbook mount.
+  ansible.builtin.import_playbook: mount.yml
+  tags: mount
+
+- name: Import playbook flatpak.
+  ansible.builtin.import_playbook: flatpak.yml
+  tags: flatpak
+
+- name: Import playbook ostree.
+  ansible.builtin.import_playbook: ostree.yml
+  tags: ostree
+
+### require extra packages in ostree ###
+
+- name: Import playbook tailscale.
+  ansible.builtin.import_playbook: tailscale.yml
+  tags: tailscale
+
+- name: Import playbook u2f.
+  ansible.builtin.import_playbook: u2f.yml
+  tags: u2f

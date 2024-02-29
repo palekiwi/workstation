@@ -1,0 +1,38 @@
+---
+- name: Setup u2f for yubikey.
+  hosts: workstation
+  become: true
+
+  tasks:
+    - name: Ensure directory exists.
+      ansible.builtin.file:
+        path: /home/{{ user }}/.config/Yubico
+        state: directory
+        mode: "0700"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+
+    - name: Check if configuration file exists in ~/.config/Yubico/u2f.
+      ansible.builtin.stat:
+        path: /home/{{ user }}/.config/Yubico/u2f_keys
+      register: u2f_keys
+
+    - name: Fail if configuration is not present.
+      ansible.builtin.fail:
+        msg: "Run `pamu2fcfg > ~/.config/Yubico/u2f_keys` in order to associate yubikey with account"
+      when: not u2f_keys.stat.exists
+
+    - name: Ensure yubikey is sufficient to authenticate sudo.
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/sudo
+        state: present
+        line: "auth sufficient pam_u2f.so cue"
+        insertafter: '#%PAM-1.0'
+
+    - name: Ensure yubikey is sufficient to unlock xscreensaver.
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/xscreensaver
+        line: "auth sufficient pam_u2f.so nouserok"
+        insertafter: '#%PAM-1.0'

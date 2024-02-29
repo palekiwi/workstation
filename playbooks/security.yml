@@ -1,0 +1,7 @@
+---
+- name: Setup security for servers.
+  hosts: workstation
+  become: true
+
+  roles:
+    - palekiwi.security_general

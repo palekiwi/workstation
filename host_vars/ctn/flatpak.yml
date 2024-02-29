@@ -1,0 +1,9 @@
+---
+flatpak_packages_host:
+  - { state: present, method: user, remote: flathub, filesystem: home, name: com.google.chrome }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.inkscape.Inkscape }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.gimp.GIMP }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: com.jgraph.drawio.desktop }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: com.icons8.Lunacy }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.kryogenix.Pick }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.onlyoffice.desktopeditors }

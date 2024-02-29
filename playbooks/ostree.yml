@@ -1,0 +1,16 @@
+---
+- name: Manage rpm-ostree.
+  hosts: workstation
+
+  handlers:
+    - name: Breakpoint
+      ansible.builtin.fail:
+        msg: "Reboot required"
+
+  tasks:
+    - name: Ensure packages are installed.
+      community.general.rpm_ostree_pkg:
+        name: "{{ ostree_packages }}"
+        state: present
+      register: ostree_result
+      notify: Breakpoint

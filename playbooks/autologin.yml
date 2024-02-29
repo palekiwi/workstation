@@ -1,0 +1,22 @@
+---
+- name: Configure workstation.
+  hosts: workstation
+  become: true
+
+  tasks:
+    - name: Enable autologin in GDM.
+      community.general.ini_file:
+        path: /etc/gdm/custom.conf
+        mode: "0644"
+        section: daemon
+        option: AutomaticLoginEnable
+        value: true
+
+    - name: Enable autologin for user {{ user }}.
+      community.general.ini_file:
+        path: /etc/gdm/custom.conf
+        mode: "0644"
+        section: daemon
+        option: AutomaticLogin
+        value: "{{ user }}"
+        state: present

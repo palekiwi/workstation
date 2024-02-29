@@ -1,0 +1,21 @@
+---
+- name: Set up gpg and yubikey.
+  hosts: workstation
+  become: true
+
+  tasks:
+    - name: Run tasks for user {{ user }}.
+      become: true
+      become_user: "{{ user }}"
+      block:
+        - name: Ensure public key is present.
+          ansible.builtin.command:
+            cmd: gpg --recv-keys {{ public_key }}
+          register: recv_key_out
+          changed_when: '"not changed" not in recv_key_out.stderr'
+
+    - name: Ensure pcscd.service is started and enabled.
+      ansible.builtin.service:
+        name: pcscd
+        state: started
+        enabled: true

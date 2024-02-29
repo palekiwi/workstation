@@ -1,0 +1,35 @@
+---
+- name: Log into tailscale.
+  hosts: workstation
+  become: true
+
+  handlers:
+    - name: Log into tailscale
+      ansible.builtin.command:
+        cmd: tailscale up --auth-key={{ tailscale_auth_key }}
+      changed_when: true
+
+  tasks:
+    - name: Check if tailscale is already installed.
+      ansible.builtin.stat:
+        path: /usr/bin/tailscale
+      register: stat_tailscale
+
+    - name: Fail if tailscale is not installed.
+      when: not stat_tailscale.stat.exists
+      ansible.builtin.fail:
+        msg: "Tailscale is not installed. Run: `rpm-ostree install tailscale`"
+
+    - name: Ensure tailscaled service is started.
+      ansible.builtin.service:
+        name: tailscaled.service
+        state: started
+        enabled: true
+
+    - name: Check if machine already has an IP assigned.
+      ansible.builtin.command:
+        cmd: "tailscale status --peers=false"
+      register: tailscale_status
+      failed_when: false
+      changed_when: "'Logged out' in tailscale_status.stdout"
+      notify: Log into tailscale

@@ -1,0 +1,17 @@
+---
+- name: Configure repositories.
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Add tailscale repository.
+      when: false
+      ansible.builtin.yum_repository:
+        name: tailscale
+        description: Tailscale stable
+        baseurl: https://pkgs.tailscale.com/stable/fedora/$basearch
+        gpgkey: https://pkgs.tailscale.com/stable/fedora/repo.gpg
+        gpgcheck: false
+        repo_gpgcheck: true
+        enabled: true

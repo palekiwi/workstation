@@ -1,0 +1,78 @@
+---
+- name: Manage flatpaks with flathub remote.
+  hosts: workstation
+  become: true
+
+  tasks:
+    - name: Check overrides.
+      ansible.builtin.command:
+        cmd: flatpak override --show
+      changed_when: false
+      register: flatpak_overrides_output
+
+    - name: Allow flatpak to access local themes.
+      ansible.builtin.command:
+        cmd: "flatpak override --filesystem={{ local_themes_dir }}"
+      changed_when: local_themes_dir not in flatpak_overrides_output.stdout
+
+    - name: Set a theme for flatpak apps.
+      ansible.builtin.command:
+        cmd: "flatpak override --env=GTK_THEME={{ gtk_theme }}"
+      changed_when: gtk_theme not in flatpak_overrides_output.stdout
+
+    - name: Update system flatpaks.
+      ansible.builtin.command:
+        cmd: "flatpak --system update --noninteractive"
+      register: flatpak_update_output
+      changed_when: "'Nothing to do.' not in flatpak_update_output.stdout"
+
+    - name: Remove unused system flatpaks.
+      ansible.builtin.command:
+        cmd: "flatpak --system uninstall --unused --noninteractive"
+      register: flatpak_uninstall_output
+      changed_when: "'Nothing unused to uninstall' not in flatpak_uninstall_output.stdout"
+
+    - name: Run tasks for user {{ user }}.
+      become: true
+      become_user: "{{ user }}"
+      block:
+        - name: Add flathub remote to user installation.
+          community.general.flatpak_remote:
+            name: flathub
+            method: user
+            state: present
+            flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+        - name: Set fact for flatpak_packages.
+          ansible.builtin.set_fact:
+            flatpak_packages: "{{ flatpak_packages + flatpak_packages_host }}"
+
+        - name: Ensure base flatpaks are installed from flathub remote.
+          community.general.flatpak:
+            name: "{{ item.name }}"
+            method: "{{ item.method }}"
+            remote: "{{ item.remote }}"
+            state: "{{ item.state }}"
+          loop: "{{ flatpak_packages }}"
+
+        - name: Check package overrides.
+          ansible.builtin.command:
+            cmd: flatpak override --{{ item.method }} {{ item.name }} --show
+          changed_when: false
+          register: flatpak_package_overrides_output
+          loop: "{{ flatpak_packages }}"
+
+        - name: Allow flatpak to access host filesystem.
+          ansible.builtin.command:
+            cmd: "flatpak override --{{ item.method }} {{ item.name }} --filesystem={{ item.filesystem }}"
+          changed_when: item.filesystem not in flatpak_package_overrides_output['results'][idx]['stdout']
+          when: (item.state == "present") and (item.filesystem is defined)
+          loop: "{{ flatpak_packages }}"
+          loop_control:
+            index_var: idx
+
+        - name: Remove unused flatpak.
+          ansible.builtin.command:
+            cmd: "flatpak --user uninstall --unused --noninteractive"
+          register: flatpak_uninstall_output
+          changed_when: "'Nothing unused to uninstall' not in flatpak_uninstall_output.stdout"
