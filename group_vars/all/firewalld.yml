@@ -1,0 +1,19 @@
+---
+security_general_ssh_port: 438
+
+security_general_ip_unpriviledged_port_start: 1024
+
+security_general_firewalld_default_zone: public
+
+security_general_firewalld_ports:
+  - { zone: dmz, port: "{{ security_general_ssh_port }}/tcp", state: enabled } # ssh
+  - { zone: public, port: "{{ security_general_ssh_port }}/tcp", state: enabled }
+
+security_general_firewalld_services:
+  - { zone: dmz, service: "http", state: enabled}
+  - { zone: dmz, service: "https", state: enabled }
+  - { zone: dmz, service: "nfs", state: enabled }
+  - { zone: dmz, service: "ssh", state: enabled }
+
+security_general_firewalld_interfaces:
+  - { zone: dmz, interface: tailscale0, state: enabled}

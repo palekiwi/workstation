@@ -18,6 +18,9 @@ source $dir/bin/activate
 echo "Installing ansible..."
 pip install ansible
 
+echo "Installing roles from requirements..."
+ansible-galaxy install -r requirements.yml
+
 echo -e "\nDONE\n"
 
 echo "To run the main playbook:"

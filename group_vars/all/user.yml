@@ -1,0 +1,7 @@
+---
+user: pl
+
+user_public_key: 848E5BB30B98EB1D2714BCCB44766C74B3546A52
+
+user_authorized_keys:
+  - key: https://github.com/palekiwi.keys

@@ -1,2 +1,4 @@
 ---
 gtk_theme: "Arc-Darker"
+
+local_themes_dir: "/home/pl/.themes"

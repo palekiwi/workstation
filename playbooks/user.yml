@@ -1,5 +1,5 @@
 ---
-- name: Set up gpg and yubikey.
+- name: Configure user.
   hosts: workstation
   become: true
 
@@ -10,9 +10,16 @@
       block:
         - name: Ensure public key is present.
           ansible.builtin.command:
-            cmd: gpg --recv-keys {{ public_key }}
+            cmd: gpg --recv-keys {{ user_public_key }}
           register: recv_key_out
           changed_when: '"not changed" not in recv_key_out.stderr'
+
+    - name: Set authorized key for user {{ user }}.
+      ansible.posix.authorized_key:
+        user: "{{ user }}"
+        state: present
+        key: "{{ item.key }}"
+      loop: "{{ user_authorized_keys }}"
 
     - name: Ensure pcscd.service is started and enabled.
       ansible.builtin.service:

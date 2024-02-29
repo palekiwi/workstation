@@ -1,11 +1,11 @@
 ---
+- name: Import playbook user.
+  ansible.builtin.import_playbook: user.yml
+  tags: user
+
 - name: Import playbook security.
   ansible.builtin.import_playbook: security.yml
   tags: security
-
-- name: Import playbook gpg.
-  ansible.builtin.import_playbook: gpg.yml
-  tags: gpg
 
 - name: Import playbook dotfiles.
   ansible.builtin.import_playbook: dotfiles.yml
