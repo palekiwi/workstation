@@ -1,11 +1,14 @@
 ---
-- name: Manage rpm-ostree.
-  hosts: localhost
-  connection: local
+- name: Configure libvirt.
+  hosts: workstation
+  become: true
+
+  handlers:
+    - name: Import handlers
+      ansible.builtin.import_tasks: ./handlers/main.yml
 
   tasks:
     - name: Ensure packages are installed.
-      become: true
       community.general.rpm_ostree_pkg:
         name:
           - virt-install
@@ -15,9 +18,9 @@
           - virt-manager
           - virt-viewer
         state: present
+      notify: Require reboot.
 
     - name: Add polkit rule for user.
-      become: true
       ansible.builtin.copy:
         dest: "/etc/polkit-1/rules.d/80-libvirt-manage.rules"
         content: |

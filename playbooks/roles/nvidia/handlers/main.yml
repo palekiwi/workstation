@@ -1,0 +1,9 @@
+---
+# handlers file for nvidia
+- name: Require reboot.
+  ansible.builtin.debug:
+    msg: "*** Reboot required ***"
+  notify: End host
+
+- name: End host
+  ansible.builtin.meta: end_host

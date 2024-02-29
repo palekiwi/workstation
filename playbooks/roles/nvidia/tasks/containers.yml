@@ -1,0 +1,37 @@
+- name: Ensures repo for nvidia containers toolkit is present and enabled.
+  ansible.builtin.yum_repository:
+    name: nvidia-container-toolkit
+    description: Libnvidia-container
+    baseurl: "https://nvidia.github.io/libnvidia-container/stable/centos8/$basearch"
+    repo_gpgcheck: true
+    gpgcheck: false
+    enabled: true
+    gpgkey: https://nvidia.github.io/libnvidia-container/gpgkey
+    sslverify: 1
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+- name: Ensures experimental repo for nvidia containers toolkit is present.
+  ansible.builtin.yum_repository:
+    name: nvidia-container-toolkit-experimental
+    description: libnvidia-container-experimental
+    baseurl: "https://nvidia.github.io/libnvidia-container/experimental/centos8/$basearch"
+    repo_gpgcheck: true
+    gpgcheck: false
+    enabled: false
+    gpgkey: https://nvidia.github.io/libnvidia-container/gpgkey
+    sslverify: 1
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+- name: Ensure required package is present for container toolkit.
+  community.general.rpm_ostree_pkg:
+    name: "{{ nvidia_container_toolkit }}"
+  notify: Require reboot.
+
+- name: Flush handlers.
+  ansible.builtin.meta: flush_handlers
+
+- name: Edit
+  ansible.builtin.lineinfile:
+    path: "/etc/nvidia-container-runtime/config.toml"
+    regexp: 'no-cgroups ='
+    line: 'no-cgroups = true'

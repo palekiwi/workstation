@@ -1,6 +1,6 @@
 ---
 - name: Setup nvidia drivers and container runtime.
-  hosts: ctn
+  hosts: nvidia
   become: true
 
   roles:

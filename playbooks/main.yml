@@ -35,7 +35,7 @@
   ansible.builtin.import_playbook: ostree.yml
   tags: ostree
 
-### require extra packages in ostree ###
+### extra packages in ostree required to run ###
 
 - name: Import playbook tailscale.
   ansible.builtin.import_playbook: tailscale.yml
@@ -44,3 +44,11 @@
 - name: Import playbook u2f.
   ansible.builtin.import_playbook: u2f.yml
   tags: u2f
+
+- name: Import playbook nvidia.
+  ansible.builtin.import_playbook: nvidia.yml
+  tags: nvidia
+
+- name: Import playbook libvirt.
+  ansible.builtin.import_playbook: libvirt.yml
+  tags: libvirt

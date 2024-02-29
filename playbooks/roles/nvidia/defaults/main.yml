@@ -1,0 +1,9 @@
+---
+# defaults file for nvidia
+nvidia_driver_packages:
+  - akmod-nvidia
+  - xorg-x11-drv-nvidia
+  - xorg-x11-drv-nvidia-cuda
+
+nvidia_container_toolkit:
+  - nvidia-container-toolkit

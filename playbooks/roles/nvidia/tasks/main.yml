@@ -1,0 +1,19 @@
+---
+# tasks file for nvidia
+- name: Ensure required packages are present.
+  community.general.rpm_ostree_pkg:
+    name: "{{ nvidia_driver_packages }}"
+  notify: Require reboot.
+
+- name: Blacklist noveau driver.
+  ansible.builtin.command:
+    cmd: >
+      rpm-ostree kargs
+      --append-if-missing=rd.driver.blacklist=nouveau
+      --append-if-missing=modprobe.blacklist=nouveau
+      --append-if-missing=nvidia-drm.modeset=1
+  changed_when: "'No changes.' not in output.stdout"
+  register: output
+
+- name: Include container toolkit tasks.
+  ansible.builtin.include_tasks: containers.yml

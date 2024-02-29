@@ -3,14 +3,13 @@
   hosts: workstation
 
   handlers:
-    - name: Breakpoint
-      ansible.builtin.fail:
-        msg: "Reboot required"
+    - name: Import handlers
+      ansible.builtin.import_tasks: ./handlers/main.yml
 
   tasks:
     - name: Ensure packages are installed.
+      when: false
       community.general.rpm_ostree_pkg:
         name: "{{ ostree_packages }}"
         state: present
-      register: ostree_result
-      notify: Breakpoint
+      notify: Require reboot.
