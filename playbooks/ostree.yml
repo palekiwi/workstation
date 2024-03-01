@@ -8,8 +8,6 @@
 
   tasks:
     - name: Ensure packages are installed.
-      when: false
       community.general.rpm_ostree_pkg:
         name: "{{ ostree_packages }}"
         state: present
-      notify: Require reboot.

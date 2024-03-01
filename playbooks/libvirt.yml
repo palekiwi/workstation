@@ -11,14 +11,15 @@
     - name: Ensure packages are installed.
       community.general.rpm_ostree_pkg:
         name:
-          - virt-install
           - libvirt-daemon-config-network
           - libvirt-daemon-kvm
           - qemu-kvm
+          - vagrant
+          - vagrant-libvirt
+          - virt-install
           - virt-manager
           - virt-viewer
         state: present
-      notify: Require reboot.
 
     - name: Add polkit rule for user.
       ansible.builtin.copy:

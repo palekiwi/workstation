@@ -25,13 +25,15 @@
 - name: Ensure required package is present for container toolkit.
   community.general.rpm_ostree_pkg:
     name: "{{ nvidia_container_toolkit }}"
-  notify: Require reboot.
 
-- name: Flush handlers.
-  ansible.builtin.meta: flush_handlers
+- name: Check if config.toml has been created.
+  ansible.builtin.stat:
+    path: /etc/nvidia-container-runtime/config.toml
+  register: stat_nvidia_container_runtime_config
 
-- name: Edit
+- name: Edit config.toml
+  when: stat_nvidia_container_runtime_config.stat.exists
   ansible.builtin.lineinfile:
-    path: "/etc/nvidia-container-runtime/config.toml"
+    path: /etc/nvidia-container-runtime/config.toml
     regexp: 'no-cgroups ='
     line: 'no-cgroups = true'

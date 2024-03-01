@@ -27,15 +27,17 @@
   ansible.builtin.import_playbook: mount.yml
   tags: mount
 
-- name: Import playbook flatpak.
-  ansible.builtin.import_playbook: flatpak.yml
-  tags: flatpak
-
 - name: Import playbook ostree.
   ansible.builtin.import_playbook: ostree.yml
   tags: ostree
 
-### extra packages in ostree required to run ###
+- name: Import playbook nvidia.
+  ansible.builtin.import_playbook: nvidia.yml
+  tags: nvidia
+
+- name: Import playbook libvirt.
+  ansible.builtin.import_playbook: libvirt.yml
+  tags: libvirt
 
 - name: Import playbook tailscale.
   ansible.builtin.import_playbook: tailscale.yml
@@ -45,10 +47,6 @@
   ansible.builtin.import_playbook: u2f.yml
   tags: u2f
 
-- name: Import playbook nvidia.
-  ansible.builtin.import_playbook: nvidia.yml
-  tags: nvidia
-
-- name: Import playbook libvirt.
-  ansible.builtin.import_playbook: libvirt.yml
-  tags: libvirt
+- name: Import playbook flatpak.
+  ansible.builtin.import_playbook: flatpak.yml
+  tags: flatpak
