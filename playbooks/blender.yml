@@ -5,7 +5,7 @@
 
   vars:
     user: pl
-    blender_version: "3.6.9"
+    blender_version: "4.0.2"
     blender_dir: "/home/{{ user }}/apps/blender"
     blender_dest: "{{ blender_dir }}/blender-{{ blender_version }}-linux-x64"
     blender_current: "{{ blender_dir }}/current"
