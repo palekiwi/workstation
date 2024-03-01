@@ -41,3 +41,11 @@ mount_fstab_host:
     fstype: none
     opts: nofail,x-systemd.device-timeout=2,bind
     state: present
+
+  - path: /var/lib/libvirt/images
+    src: /var/vm/libvirt/images
+    fstype: none
+    opts: nofail,x-systemd.device-timeout=2,bind
+    state: present
+    owner: root
+    group: root

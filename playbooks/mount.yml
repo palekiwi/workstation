@@ -22,8 +22,8 @@
       ansible.builtin.file:
         path: "{{ item.path }}"
         state: directory
-        owner: "{{ user }}"
-        group: "{{ user }}"
+        owner: "{{ item.owner | default(user) }}"
+        group: "{{ item.group | default(user) }}"
         mode: "0755"
       loop: "{{ mount_fstab }}"
 
