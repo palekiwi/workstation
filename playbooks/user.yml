@@ -21,8 +21,11 @@
         key: "{{ item.key }}"
       loop: "{{ user_authorized_keys }}"
 
-    - name: Ensure pcscd.service is started and enabled.
+    - name: Ensure required service are started and enabled.
       ansible.builtin.service:
-        name: pcscd
+        name: "{{ item }}"
         state: started
         enabled: true
+      loop:
+        - pcscd
+        - sshd
