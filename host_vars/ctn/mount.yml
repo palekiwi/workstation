@@ -12,14 +12,32 @@ mount_fstab_host:
     opts: defaults,nofail
     state: present
 
+  - path: /var/home/pl/ctn
+    src: /dev/sda3
+    fstype: ntfs
+    opts: defaults,nofail
+    state: present
+
   - path: /var/vm
     src: /dev/mapper/data-vm
     fstype: xfs
     opts: defaults,nofail
     state: present
 
+  - path: /var/models
+    src: /dev/mapper/data-models
+    fstype: xfs
+    opts: defaults,nofail
+    state: present
+
   - path: /var/home/pl/.vagrant.d/
     src: /var/vm/vagrant.d
+    fstype: none
+    opts: nofail,x-systemd.device-timeout=2,bind
+    state: present
+
+  - path: /var/home/pl/.local/share/containers
+    src: /var/vm/containers
     fstype: none
     opts: nofail,x-systemd.device-timeout=2,bind
     state: present
