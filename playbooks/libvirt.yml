@@ -30,3 +30,9 @@
             }
           });
         mode: "0644"
+
+    - name: Ensure libvirtd is started and enabled.
+      ansible.builtin.service:
+        name: libvirtd
+        state: started
+        enabled: true
