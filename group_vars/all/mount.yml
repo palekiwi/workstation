@@ -1,0 +1,10 @@
+---
+mount_crypttab: []
+
+mount_fstab:
+  - path: /home/pl/nfs/media
+    src: asus:/mnt/data1/media
+    fstype: nfs4
+    opts: _netdev,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min
+    state: present
+    boot: false

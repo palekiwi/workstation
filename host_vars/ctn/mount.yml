@@ -1,0 +1,25 @@
+---
+mount_crypttab_host:
+  - backing_device: UUID=fc4aa7fc-c8f0-468e-b0be-f0b779ca14af
+    name: data
+    state: present
+    opts: nofail
+
+mount_fstab_host:
+  - path: /var/home/pl/Nextcloud
+    src: /dev/mapper/data-nc
+    fstype: xfs
+    opts: defaults,nofail
+    state: present
+
+  - path: /var/vm
+    src: /dev/mapper/data-vm
+    fstype: xfs
+    opts: defaults,nofail
+    state: present
+
+  - path: /var/home/pl/.vagrant.d/
+    src: /var/vm/vagrant.d
+    fstype: none
+    opts: nofail,x-systemd.device-timeout=2,bind
+    state: present

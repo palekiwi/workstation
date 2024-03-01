@@ -4,11 +4,35 @@
   become: true
 
   tasks:
-    - name: Ensure fstab entry exists for /home/pl/nfs/media.
+    - name: Set facts.
+      ansible.builtin.set_fact:
+        mount_crypttab: "{{ mount_crypttab + mount_crypttab_host }}"
+        mount_fstab: "{{ mount_fstab + mount_fstab_host }}"
+
+    - name: Set up cryptab.
+      community.general.crypttab:
+        name: "{{ item.name }}"
+        backing_device: "{{ item.backing_device }}"
+        password: "{{ item.password | default(omit) }}"
+        opts: "{{ item.opts }}"
+        state: "{{ item.state }}"
+      loop: "{{ mount_crypttab }}"
+
+    - name: Ensure mount directories exist.
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: "0755"
+      loop: "{{ mount_fstab }}"
+
+    - name: Setup up fstab mounts.
       ansible.posix.mount:
-        path: /home/pl/nfs/media
-        src: asus:/mnt/data1/media
-        fstype: nfs4
-        opts: _netdev,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min
-        state: present
-        boot: false
+        path: "{{ item.path }}"
+        src: "{{ item.src }}"
+        fstype: "{{ item.fstype }}"
+        opts: "{{ item.opts }}"
+        boot: "{{ item.boot | default(omit) }}"
+        state: "{{ item.state }}"
+      loop: "{{ mount_fstab }}"
