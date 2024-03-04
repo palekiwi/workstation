@@ -6,7 +6,9 @@ security_general_ip_unpriviledged_port_start: 1024
 security_general_firewalld_default_zone: public
 
 security_general_firewalld_ports:
+  - { zone: dmz, port: "41641/udp", state: enabled } # wireguard port
   - { zone: dmz, port: "{{ security_general_ssh_port }}/tcp", state: enabled } # ssh
+  - { zone: public, port: "41641/udp", state: enabled } # wireguard port
   - { zone: public, port: "{{ security_general_ssh_port }}/tcp", state: enabled }
 
 security_general_firewalld_services:
