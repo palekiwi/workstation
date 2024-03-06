@@ -1,0 +1,55 @@
+---
+- name: Install ollama.
+  hosts: ctn
+  become: true
+
+  tasks:
+    - name: Ensure ollama user exists.
+      ansible.builtin.user:
+        name: ollama
+        home: /var/models/ollama
+        system: true
+        shell: /bin/false
+        state: present
+        comment: Ollama system user
+        create_home: true
+
+    - name: Download executable
+      ansible.builtin.get_url:
+        url: https://ollama.com/download/ollama-linux-amd64
+        dest: /opt/ollama
+        mode: 755
+        force: "{{ ollama_update | default(false) }}"
+        owner: ollama
+        group: ollama
+
+    - name: Ensure system service template is installed.
+      ansible.builtin.template:
+        src: templates/ollama.service.j2
+        dest: /etc/systemd/system/ollama.service
+        mode: "0644"
+
+    - name: Ensure ollama service is started and enabled.
+      ansible.builtin.service:
+        name: ollama
+        state: started
+        enabled: true
+
+    - name: Uninstall ollama.
+      when: ollama_uninstall | default(false)
+      block:
+        - name: Remove ollama user.
+          ansible.builtin.user:
+            name: ollama
+            state: absent
+
+        - name: Ensure ollama service is stopped and disabled.
+          ansible.builtin.service:
+            name: ollama
+            state: stopped
+            enabled: false
+
+        - name: Ensure system service template is removed.
+          ansible.builtin.file:
+            path: /etc/systemd/system/ollama.service
+            state: absent
