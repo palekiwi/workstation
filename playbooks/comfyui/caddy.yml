@@ -1,0 +1,47 @@
+---
+- name: Set up caddy
+  hosts: ctn
+
+  vars:
+    caddy_user: pl
+    caddy_comfy_pod_name: caddy-comfy
+    caddy_comfy_tailscale_hostname: comfy
+  tasks:
+    - name: Run tasks as user {{ caddy_user }}.
+      become: true
+      become_user: "{{ caddy_user }}"
+      block:
+        - name: Install kube definitions.
+          ansible.builtin.template:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+            mode: "0644"
+          loop:
+            - src: templates/caddy-comfy.kube.yml.j2
+              dest: /tmp/caddy-comfy.yml
+            - src: templates/caddy.configmap.yml.j2
+              dest: /tmp/caddy.configmap.yml
+
+        - name: Ensure app is deployed.
+          containers.podman.podman_play:
+            kube_file: "/tmp/{{ caddy_comfy_pod_name }}.yml"
+            state: created
+            recreate: true
+            configmap:
+              - /tmp/caddy.configmap.yml
+
+        - name: Setup systemd services.
+          block:
+            - name: Generate systemd units.
+              containers.podman.podman_generate_systemd:
+                name: "{{ caddy_comfy_pod_name }}"
+                dest: ~/.config/systemd/user/
+                restart_policy: on-failure
+
+            - name: Ensure systemd units are started and enabled.
+              ansible.builtin.systemd:
+                scope: user
+                daemon_reload: true
+                name: pod-{{ caddy_comfy_pod_name }}
+                enabled: true
+                state: started

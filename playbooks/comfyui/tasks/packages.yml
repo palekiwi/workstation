@@ -1,0 +1,16 @@
+---
+- name: Ensure packages are installed.
+  ansible.builtin.pip:
+    virtualenv: "{{ comfyui_venv }}"
+    virtualenv_command: "{{ comfyui_virtualenv_command }}"
+    name:
+      - torch
+      - torchvision
+      - torchaudio
+    extra_args: "--extra-index-url https://download.pytorch.org/whl/cu121"
+
+- name: Install specified python requirements
+  ansible.builtin.pip:
+    virtualenv: "{{ comfyui_venv }}"
+    virtualenv_command: "{{ comfyui_virtualenv_command }}"
+    requirements: "{{ comfyui_dir }}/requirements.txt"

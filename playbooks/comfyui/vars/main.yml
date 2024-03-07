@@ -1,0 +1,9 @@
+---
+comfyui_venv: /home/pl/.venv/fedora/sd-gui
+comfyui_virtualenv_command: python3.11 -m venv
+
+comfyui_repo: https://github.com/comfyanonymous/ComfyUI
+
+comfyui_dir: /opt/comfyui
+
+comfyui_models_dir: /opt/models/sd

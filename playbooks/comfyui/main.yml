@@ -1,0 +1,43 @@
+---
+- name: Install ComfyUI.
+  hosts: ctn
+
+  vars:
+    ansible_user: pl
+
+  vars_files:
+    - vars/main.yml
+    - vars/models.yml
+    - vars/nodes.yml
+
+  tasks:
+    - name: Ensure CompyUI repos has been cloned.
+      ansible.builtin.git:
+        repo: "{{ comfyui_repo }}"
+        dest: "{{ comfyui_dir }}"
+        depth: 1
+        version: master
+      tags: repo
+
+    - name: Import tasks/packages.
+      ansible.builtin.import_tasks: tasks/packages.yml
+      tags: packages
+
+    - name: Import tasks/templates.
+      ansible.builtin.import_tasks: tasks/templates.yml
+      tags: templates
+
+    - name: Import tasks/models.
+      ansible.builtin.import_tasks: tasks/models.yml
+      tags: models
+
+    - name: Import tasks/nodes.
+      ansible.builtin.import_tasks: tasks/nodes.yml
+      tags: nodes
+
+    - name: Install systemd service template.
+      ansible.builtin.template:
+        src: templates/comfyui.service.j2
+        dest: ~/.config/systemd/user/comfyui.service
+        mode: "0644"
+      tags: service

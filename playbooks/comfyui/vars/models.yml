@@ -1,0 +1,106 @@
+---
+comfyui_models:
+  - name: checkpoints
+    dir: "{{ comfyui_models_dir }}/checkpoints"
+    items:
+      - { file: sd15/Deliberate_v5-inpainting.safetensors, url: https://huggingface.co/XpucT/Deliberate/resolve/main/Deliberate_v5-inpainting.safetensors } # noqa yaml[line-length]
+      - { file: sd15/Deliberate_v5.safetensors, url: https://huggingface.co/XpucT/Deliberate/resolve/main/Deliberate_v5.safetensors } # noqa yaml[line-length]
+      - { file: sd15/absolutereality_v181.safetensors, url: https://huggingface.co/digiplay/AbsoluteReality_v1.8.1/resolve/main/absolutereality_v181.safetensors } # noqa yaml[line-length]
+      - { file: sd15/absolutereality_v181INPAINTING.safetensors, url: https://civitai.com/api/download/models/134084 } # noqa yaml[line-length]
+      - { file: sd15/dreamshaper_8.safetensors, url: https://huggingface.co/digiplay/DreamShaper_8/resolve/main/dreamshaper_8.safetensors } # noqa yaml[line-length]
+      - { file: sd15/epicrealism_naturalSinRC1VAE.safetensors, url: https://huggingface.co/Justin-Choo/epiCRealism-Natural_Sin_RC1_VAE/resolve/main/epicrealism_naturalSinRC1VAE.safetensors } # noqa yaml[line-length]
+      - { file: sd15/revAnimated_v122.safetensors, url: https://huggingface.co/Renqf/sd/resolve/main/revAnimated_v122.safetensors } # noqa yaml[line-length]
+      - { file: sd15/v1-5-pruned-emaonly.safetensors, url: https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors } # noqa yaml[line-length]
+      - { file: sdxl/sd_xl_base_1.0.safetensors, url: https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors } # noqa yaml[line-length]
+      - { file: sdxl/sd_xl_refiner_1.0.safetensors, url: https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors } # noqa yaml[line-length]
+
+  - name: clip
+    dir: "{{ comfyui_models_dir }}/clip"
+
+  - name: grounding-dino
+    dir: "{{ comfyui_models_dir }}/grounding-dino"
+    items:
+      - { file: GroundingDINO_SwinT_OGC.pth, url: "https://huggingface.co/ShilongLiu/GroundingDINO/resolve/main/groundingdino_swint_ogc.pth" } # noqa yaml[line-length]
+      - { file: GroundingDINO_SwinT_OGC.cfg.py, url: "https://huggingface.co/ShilongLiu/GroundingDINO/resolve/main/GroundingDINO_SwinT_OGC.cfg.py" } # noqa yaml[line-length]
+      - { file: GroundingDINO_SwinB.pth, url: "https://huggingface.co/ShilongLiu/GroundingDINO/resolve/main/groundingdino_swinb_cogcoor.pth" } # noqa yaml[line-length]
+      - { file: GroundingDINO_SwinB.cfg.py, url: "https://huggingface.co/ShilongLiu/GroundingDINO/resolve/main/GroundingDINO_SwinB.cfg.py" } # noqa yaml[line-length]
+
+  - name: sams
+    dir: "{{ comfyui_models_dir }}/sams"
+    items:
+      - { file: sam_vit_h.pth, url: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth" } # noqa yaml[line-length]
+      - { file: sam_vit_l.pth, url: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth" } # noqa yaml[line-length]
+      - { file: sam_vit_b.pth, url: "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth" } # noqa yaml[line-length]
+      - { file: sam_hq_vit_h.pth, url: "https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth" } # noqa yaml[line-length]
+      - { file: sam_hq_vit_l.pth, url: "https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_l.pth" } # noqa yaml[line-length]
+      - { file: sam_hq_vit_b.pth, url: "https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_b.pth" } # noqa yaml[line-length]
+      - { file: mobile_sam.pt, url: "https://github.com/ChaoningZhang/MobileSAM/blob/master/weights/mobile_sam.pt" } # noqa yaml[line-length]
+
+  - name: clip_vision
+    dir: "{{ comfyui_models_dir }}/clip_vision"
+    items:
+      - { file: sd15/IPAdapter_image_encoder_sd15.safetensors, url: https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors } # noqa yaml[line-length]
+      - { file: sdxl/IPAdapter_image_encoder_sdxl.safetensors, url: https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/image_encoder/model.safetensors } # noqa yaml[line-length]
+
+  - name: embeddings
+    dir: "{{ comfyui_models_dir }}/embeddings"
+    items:
+      - { file: sd15/BadDream.pt, type: embeddings, url: "https://civitai.com/api/download/models/77169?type=Model&format=PickleTensor" } # noqa yaml[line-length]
+      - { file: sd15/UnrealisticDream.pt, type: embeddings, url: "https://civitai.com/api/download/models/77173?type=Model&format=PickleTensor" } # noqa yaml[line-length]
+
+  - name: ipadapter
+    dir: "{{ comfyui_models_dir }}/ipadapter"
+    items:
+      - { file: sd15/ip-adapter-plus-face_sd15.safetensors, type: ipadapter, url: https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-plus-face_sd15.safetensors } # noqa yaml[line-length]
+      - { file: sd15/ip-adapter-plus_sd15.safetensors, type: ipadapter, url: https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-plus_sd15.safetensors } # noqa yaml[line-length]
+      - { file: sd15/ip-adapter_sd15.safetensors, type: ipadapter, url: https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15.safetensors } # noqa yaml[line-length]
+      - { file: sd15/ip-adapter_sd15_light.safetensors, type: ipadapter, url: https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15_light.safetensors } # noqa yaml[line-length]
+
+  - name: loras
+    dir: "{{ comfyui_models_dir }}/loras"
+    items:
+      - { file: sdxl/MIR-v3.safetensors, type: ipadapter, url: "https://civitai.com/api/download/models/132755?type=Model&format=SafeTensor" } # noqa yaml[line-length]
+
+  - name: upscale_models
+    dir: "{{ comfyui_models_dir }}/upscale_models"
+    items:
+      - { file: 1x-ITF-SkinDiffDetail-Lite-v1.pth, type: upscale_models, url: https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/1x-ITF-SkinDiffDetail-Lite-v1.pth } # noqa yaml[line-length]
+      - { file: 4x-UltraSharp.pth, type: upscale_models, url: https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth } # noqa yaml[line-length]
+      - { file: 4x_foolhardy_Remacri.pth, type: upscale_models, url: https://huggingface.co/FacehugmanIII/4x_foolhardy_Remacri/resolve/main/4x_foolhardy_Remacri.pth } # noqa yaml[line-length]
+      - { file: 8x_NMKD-Superscale_150000_G.pth, type: upscale_models, url: https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/8x_NMKD-Superscale_150000_G.pth } # noqa yaml[line-length]
+
+  - name: vae
+    dir: "{{ comfyui_models_dir }}/vae"
+    items:
+      - { file: sdxl/sdxl_vae.safetensors, type: vae, url: https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors } # noqa yaml[line-length]
+      - { file: sd15/vae-ft-mse-840000-ema-pruned.safetensors, type: vae, url: https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors } # noqa yaml[line-length]
+
+  - name: controlnet
+    dir: "{{ comfyui_models_dir }}/controlnet"
+    items:
+      - { file: sd15/control_v11f1p_sd15_depth.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11f1p_sd15_depth.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11f1p_sd15_depth.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11f1p_sd15_depth.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_canny.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_canny.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_inpaint.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_inpaint.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_inpaint.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_inpaint.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_lineart.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_lineart.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_mlsd.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_mlsd.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_mlsd.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_mlsd.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_normalbae.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_normalbae.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_normalbae.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_normalbae.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_openpose.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_openpose.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_openpose.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_openpose.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_scribble.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_scribble.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_seg.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_seg.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg.yaml"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_softedge.pth, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_softedge.pth"} # noqa yaml[line-length]
+      - { file: sd15/control_v11p_sd15_softedge.yaml, url: "https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_softedge.yaml"} # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11e_sd15_ip2p_fp16.safetensors, url: "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11e_sd15_ip2p_fp16.safetensors"} # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11p_sd15_canny_fp16.safetensors, url: https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11p_sd15_canny_fp16.safetensors } # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11p_sd15_inpaint_fp16.safetensors, url: "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11p_sd15_inpaint_fp16.safetensors"} # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11p_sd15_lineart_fp16.safetensors, url: "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11p_sd15_lineart_fp16.safetensors"} # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11p_sd15_normalbae_fp16.safetensors, url: "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11p_sd15_normalbae_fp16.safetensors"} # noqa yaml[line-length]
+      - { file: sd15/fp16/control_v11f1p_sd15_depth_fp16.safetensors, url: "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11f1p_sd15_depth_fp16.safetensors"} # noqa yaml[line-length]

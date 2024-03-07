@@ -1,0 +1,61 @@
+---
+- name: Install ComfyUI.
+  hosts: ctn
+
+  vars:
+    comfyui_user: pl
+    comfyui_dir: /opt/comfy-ui/workspace
+    comfyui_image_name: ghcr.io/ai-dock/comfyui
+    comfyui_image_tag: pytorch-2.2.0-py3.10-cuda-11.8.0-runtime-22.04
+
+  tasks:
+    - name: Ensure required directories exist.
+      become: true
+      ansible.builtin.file:
+        state: directory
+        path: "{{ item.path }}"
+        mode: "0755"
+        owner: "{{ comfyui_user }}"
+        group: "{{ comfyui_user }}"
+      loop:
+        - path: "{{ comfyui_dir }}"
+
+    - name: Run tasks for user {{ comfyui_user }}.
+      become: true
+      become_user: "{{ comfyui_user }}"
+      block:
+        - name: Ensure pod is deployed.
+          containers.podman.podman_pod:
+            name: comfyui
+            state: created
+            recreate: true
+            publish:
+              - 8188:8188
+
+        - name: Ensure ollama container is created.
+          containers.podman.podman_container:
+            name: comfyui-comfyui
+            pod: comfyui
+            security_opt: label=disable
+            device:
+              - nvidia.com/gpu=all
+            image: "{{ comfyui_image_name }}:{{ comfyui_image_tag }}"
+            state: created
+            volume:
+              - "{{ comfyui_dir }}:/workspace:Z"
+
+        - name: Setup systemd services.
+          block:
+            - name: Generate systemd units.
+              containers.podman.podman_generate_systemd:
+                name: comfyui
+                dest: "~/.config/systemd/user/"
+                restart_policy: on-failure
+
+            - name: Ensure systemd units are started and enabled.
+              ansible.builtin.systemd:
+                scope: user
+                daemon_reload: true
+                name: pod-comfyui
+                enabled: true
+                state: started

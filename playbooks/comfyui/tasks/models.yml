@@ -1,0 +1,29 @@
+- name: Install templates.
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+  loop:
+    - src: templates/extra_model_path.yaml.j2
+      dest: "{{ comfyui_dir }}/extra_model_paths.yaml"
+  loop_control:
+    label: "{{ item.dest }}"
+
+- name: Ensure model dirs and subdirs exist.
+  ansible.builtin.file:
+    path: "{{ item.0.dir }}/{{ item.1.file | dirname }}"
+    state: directory
+    mode: "0755"
+  loop: "{{ comfyui_models | subelements('items', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.dir }}/{{ item.1.file | dirname }}"
+
+- name: Download models.
+  ansible.builtin.get_url:
+    url: "{{ item.1.url }}"
+    dest: "{{ item.0.dir }}/{{ item.1.file }}"
+    mode: "0644"
+  when: (item.state | default("present")) == "present"
+  loop: "{{ comfyui_models | subelements('items', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.1.file }}"

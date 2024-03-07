@@ -1,0 +1,30 @@
+- name: Download custom nodes.
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    depth: 1
+    dest: "{{ comfyui_dir }}/custom_nodes/{{ item.name }}"
+    version: "{{ item.version }}"
+    force: true
+  loop: "{{ comfyui_custom_nodes }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: (item.state | default("present")) == "present"
+
+- name: Check if repo contains requirements.
+  ansible.builtin.stat:
+    dest: "{{ comfyui_dir }}/custom_nodes/{{ item.name }}/requirements.txt"
+  register: nodes_requirements_info
+  loop: "{{ comfyui_custom_nodes }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Install specified python requirements
+  ansible.builtin.pip:
+    virtualenv: "{{ comfyui_venv }}"
+    virtualenv_command: "{{ comfyui_virtualenv_command }}"
+    requirements: "{{ comfyui_dir }}/custom_nodes/{{ comfyui_custom_nodes[index]['name'] }}/requirements.txt"
+  loop: "{{ nodes_requirements_info.results }}"
+  loop_control:
+    index_var: index
+    label: "{{ comfyui_custom_nodes[index]['name'] }}"
+  when: item.stat.exists

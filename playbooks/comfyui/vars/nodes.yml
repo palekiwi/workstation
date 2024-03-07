@@ -1,0 +1,15 @@
+---
+comfyui_custom_nodes:
+  - { name: ComfyLiterals, repo: https://github.com/M1kep/ComfyLiterals, version: master }
+  - { name: ComfyUI-Impact-Pack, repo: https://github.com/ltdrdata/ComfyUI-Impact-Pack, version: Main }
+  - { name: ComfyUI-Inspire-Pack, repo: https://github.com/ltdrdata/ComfyUI-Inspire-Pack, version: main }
+  - { name: ComfyUI-Manager, repo: https://github.com/ltdrdata/ComfyUI-Manager.git, version: main }
+  - { name: ComfyUI-WD14-Tagger, repo: https://github.com/pythongosssss/ComfyUI-WD14-Tagger, version: main }
+  - { name: ComfyUI_Comfyroll_CustomNodes, repo: https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes, version: main }
+  - { name: ComfyUI_IPAdapter_plus, repo: https://github.com/cubiq/ComfyUI_IPAdapter_plus, version: main }
+  - { name: ComfyUI_UltimateSDUpscale, repo: https://github.com/ssitu/ComfyUI_UltimateSDUpscale, version: main }
+  - { name: ComfyUI_essentials, repo: https://github.com/cubiq/ComfyUI_essentials, version: main }
+  - { name: ComfyUi_NNLatentUpscale, repo: https://github.com/Ttl/ComfyUi_NNLatentUpscale, version: master }
+  - { name: comfyui_controlnet_aux, repo: "https://github.com/Fannovel16/comfyui_controlnet_aux", version: main }
+  - { name: comfyui_segment_anything, repo: "https://github.com/storyicon/comfyui_segment_anything", version: main }
+  - { name: efficiency-nodes-comfyui, repo: https://github.com/jags111/efficiency-nodes-comfyui, version: main }
