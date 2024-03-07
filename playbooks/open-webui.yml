@@ -1,0 +1,25 @@
+---
+- name: Install Open Webui.
+  hosts: ctn
+
+  vars:
+    openwebui_user: pl
+
+  tasks:
+    - name: Run tasks for user {{ openwebui_user }}.
+      become: true
+      become_user: "{{ openwebui_user }}"
+      block:
+        - name: Install kube definition.
+          ansible.builtin.template:
+            src: templates/kube/openwebui.yml.j2
+            dest: "/tmp/openwebui.yml"
+            mode: "0644"
+            force: true
+
+        - name: Ensure pod is deployed.
+          containers.podman.podman_play:
+            kube_file: /tmp/openwebui.yml
+            state: started
+            recreate: true
+            network: host

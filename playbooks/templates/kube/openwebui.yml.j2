@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: openwebui
+  name: openwebui
+spec:
+  containers:
+    - name: openwebui
+      image: ghcr.io/open-webui/open-webui:main
+      volumeMounts:
+        - mountPath: /app/backend/data
+          name: openwebui-data
+      ports:
+        - containerPort: 8000
+  restartPolicy: OnFailure
+  volumes:
+    - name: openwebui-data
+      persistentVolumeClaim:
+        claimName: openwebui-data
