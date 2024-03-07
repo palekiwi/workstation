@@ -1,0 +1,63 @@
+---
+- name: Install Open Webui.
+  hosts: ctn
+
+  vars:
+    ansible_user: pl
+    comfyui_venv: ~/.venv/fedora/sd-gui
+    comfyui_repo: https://github.com/comfyanonymous/ComfyUI
+    comfyui_dir: ~/opt/comfy-ui
+    comfyui_linked_dirs:
+      - src: /var/models/checkpoints
+        dest: "{{ comfyui_dir }}/models/checkpoints"
+      - src: /var/models/vae
+        dest: "{{ comfyui_dir }}/models/vae"
+
+  tasks:
+    - name: Ensure repo has been cloned.
+      ansible.builtin.git:
+        repo: "{{ comfyui_repo }}"
+        depth: 1
+        dest: "{{ comfyui_dir }}"
+        version: master
+
+    - name: Ensure all configured dotfiles are links.
+      ansible.builtin.command:
+        cmd: "ls -F {{ item.dest }}"
+      loop: "{{ comfyui_linked_dirs }}"
+      changed_when: false
+      check_mode: false
+      failed_when: false
+      register: existing_comfyui_info
+
+    - name: Remove existing file if a replacement is being linked.
+      ansible.builtin.file:
+        path: "{{ comfyui_linked_dirs[index]['dest'] }}"
+        state: absent
+      when: "'@' not in item['stdout']"
+      loop: "{{ existing_comfyui_info.results }}"
+      loop_control:
+        index_var: index
+
+    - name: Ensure directories are linked.
+      ansible.builtin.file:
+        state: link
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ comfyui_linked_dirs }}"
+
+    - name: Ensure packages are installed.
+      ansible.builtin.pip:
+        virtualenv: "{{ comfyui_venv }}"
+        virtualenv_command: /usr/bin/python -m venv
+        name:
+          - torch
+          - torchvision
+          - torchaudio
+        extra_args: "--extra-index-url https://download.pytorch.org/whl/cu121"
+
+    - name: Install specified python requirements
+      ansible.builtin.pip:
+        virtualenv: "{{ comfyui_venv }}"
+        virtualenv_command: /usr/bin/python -m venv
+        requirements: "{{ comfyui_dir }}/requirements.txt"
