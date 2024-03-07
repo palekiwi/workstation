@@ -8,9 +8,9 @@
     comfyui_repo: https://github.com/comfyanonymous/ComfyUI
     comfyui_dir: ~/opt/comfy-ui
     comfyui_linked_dirs:
-      - src: /var/models/checkpoints
+      - src: /opt/models/checkpoints
         dest: "{{ comfyui_dir }}/models/checkpoints"
-      - src: /var/models/vae
+      - src: /opt/models/vae
         dest: "{{ comfyui_dir }}/models/vae"
 
   tasks:
@@ -20,6 +20,7 @@
         depth: 1
         dest: "{{ comfyui_dir }}"
         version: master
+        update: false
 
     - name: Ensure all configured dotfiles are links.
       ansible.builtin.command:
