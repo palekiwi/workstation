@@ -1,0 +1,4 @@
+comfyui:
+  {% for item in comfyui_models %}
+  {{ item.key }}: {{ item.value }}
+  {% endfor %}

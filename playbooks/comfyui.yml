@@ -1,5 +1,5 @@
 ---
-- name: Install Open Webui.
+- name: Install ComfyUI.
   hosts: ctn
 
   vars:
@@ -7,45 +7,35 @@
     comfyui_venv: ~/.venv/fedora/sd-gui
     comfyui_repo: https://github.com/comfyanonymous/ComfyUI
     comfyui_dir: ~/opt/comfy-ui
-    comfyui_linked_dirs:
-      - src: /opt/models/checkpoints
-        dest: "{{ comfyui_dir }}/models/checkpoints"
-      - src: /opt/models/vae
-        dest: "{{ comfyui_dir }}/models/vae"
+    comfyui_models:
+      - key: checkpoints
+        value: /opt/models/checkpoints/
+      - key: vae
+        value: /opt/models/vae/
 
   tasks:
-    - name: Ensure repo has been cloned.
+    - name: Ensure repos have been cloned.
       ansible.builtin.git:
-        repo: "{{ comfyui_repo }}"
+        repo: "{{ item.repo }}"
         depth: 1
-        dest: "{{ comfyui_dir }}"
-        version: master
-        update: false
+        dest: "{{ item.dest }}"
+        version: "{{ item.version }}"
+      loop:
+        - repo: "{{ comfyui_repo }}"
+          dest: "{{ comfyui_dir }}"
+          version: master
+        - repo: https://github.com/ltdrdata/ComfyUI-Manager.git
+          dest: "{{ comfyui_dir }}/custom_nodes/ComfyUI-Manager"
+          version: main
 
-    - name: Ensure all configured dotfiles are links.
-      ansible.builtin.command:
-        cmd: "ls -F {{ item.dest }}"
-      loop: "{{ comfyui_linked_dirs }}"
-      changed_when: false
-      check_mode: false
-      failed_when: false
-      register: existing_comfyui_info
-
-    - name: Remove existing file if a replacement is being linked.
-      ansible.builtin.file:
-        path: "{{ comfyui_linked_dirs[index]['dest'] }}"
-        state: absent
-      when: "'@' not in item['stdout']"
-      loop: "{{ existing_comfyui_info.results }}"
-      loop_control:
-        index_var: index
-
-    - name: Ensure directories are linked.
-      ansible.builtin.file:
-        state: link
+    - name: Install templates.
+      ansible.builtin.template:
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
-      loop: "{{ comfyui_linked_dirs }}"
+        mode: "0644"
+      loop:
+        - src: templates/extra_model_path.yaml.j2
+          dest: "{{ comfyui_dir }}/extra_model_paths.yaml"
 
     - name: Ensure packages are installed.
       ansible.builtin.pip:
