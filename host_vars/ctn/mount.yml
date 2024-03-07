@@ -30,6 +30,12 @@ mount_fstab_host:
     opts: defaults,nofail
     state: present
 
+  - path: /opt/models
+    src: /dev/mapper/data-models
+    fstype: xfs
+    opts: defaults,nofail
+    state: present
+
   - path: /var/home/pl/.vagrant.d/
     src: /var/vm/vagrant.d
     fstype: none
