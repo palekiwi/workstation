@@ -1,0 +1,61 @@
+---
+- name: Install ollama.
+  hosts: ctn
+  become: true
+
+  tasks:
+    - name: Ensure a directories for ollama exist.
+      ansible.builtin.file:
+        state: directory
+        path: "{{ item.path }}"
+        mode: "0755"
+        owner: "{{ ollama_user }}"
+        group: "{{ ollama_user }}"
+      loop:
+        - path: "{{ ollama_dir }}"
+        - path: "{{ ollama_dir }}/.ollama"
+
+    - name: Run tasks for user {{ ollama_user }}.
+      become: true
+      become_user: "{{ ollama_user }}"
+      block:
+        - name: Ensure a network is created.
+          containers.podman.podman_network:
+            name: ollama
+            state: present
+
+        - name: Ensure pod is deployed.
+          containers.podman.podman_pod:
+            name: ollama
+            state: created
+            recreate: true
+            publish:
+              - 11434:11434
+
+        - name: Ensure ollama container is created.
+          containers.podman.podman_container:
+            name: ollama-ollama
+            pod: ollama
+            security_opt: label=disable
+            device:
+              - nvidia.com/gpu=all
+            image: "{{ ollama_image_name }}:{{ ollama_image_tag }}"
+            state: created
+            volume:
+              - "{{ ollama_dir }}/.ollama:/root/.ollama:Z"
+
+        - name: Setup systemd services.
+          block:
+            - name: Generate systemd units for ollama.
+              containers.podman.podman_generate_systemd:
+                name: ollama
+                dest: "/home/{{ ollama_user }}/.config/systemd/user/"
+                restart_policy: on-failure
+
+            - name: Ensure systemd units are started and enabled for ollama.
+              ansible.builtin.systemd:
+                scope: user
+                daemon_reload: true
+                name: pod-ollama
+                enabled: true
+                state: started

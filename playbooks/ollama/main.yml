@@ -1,0 +1,8 @@
+---
+- name: Import playbook ollama.
+  ansible.builtin.import_playbook: ollama.yml
+  tags: pod
+
+- name: Import playbook models.
+  ansible.builtin.import_playbook: models.yml
+  tags: models

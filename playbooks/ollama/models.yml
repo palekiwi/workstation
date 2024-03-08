@@ -1,0 +1,15 @@
+---
+- name: Prepare models.
+  hosts: ctn
+
+  tasks:
+    - name: Run tasks for user {{ ollama_user }}.
+      become: true
+      become_user: "{{ ollama_user }}"
+      block:
+        - name: Ensure required models are present.
+          containers.podman.podman_container_exec:
+            name: ollama-ollama
+            command: "ollama pull {{ item.name }}"
+          when: item.state == "present"
+          loop: "{{ ollama_models }}"

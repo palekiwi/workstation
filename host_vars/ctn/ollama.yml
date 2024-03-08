@@ -1,0 +1,8 @@
+---
+ollama_user: pl
+ollama_image_name: docker.io/ollama/ollama
+ollama_image_tag: latest
+ollama_dir: /opt/models/ollama
+ollama_models:
+  - name: llama2
+    state: present
