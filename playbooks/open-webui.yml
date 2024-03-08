@@ -20,6 +20,21 @@
         - name: Ensure pod is deployed.
           containers.podman.podman_play:
             kube_file: /tmp/openwebui.yml
-            state: started
+            state: created
             recreate: true
-            network: host
+
+        - name: Setup systemd services.
+          block:
+            - name: Generate systemd units.
+              containers.podman.podman_generate_systemd:
+                name: openwebui
+                dest: ~/.config/systemd/user/
+                restart_policy: on-failure
+
+            - name: Ensure systemd units are started and enabled.
+              ansible.builtin.systemd:
+                scope: user
+                daemon_reload: true
+                name: pod-openwebui
+                enabled: true
+                state: started

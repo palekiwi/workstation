@@ -6,6 +6,8 @@ security_general_ip_unpriviledged_port_start: 1024
 security_general_firewalld_default_zone: public
 
 security_general_firewalld_ports:
+  - { zone: dmz, port: "8080/tcp", state: enabled } # openwebui
+  - { zone: dmz, port: "11434/tcp", state: enabled } # ollama
   - { zone: dmz, port: "41641/udp", state: enabled } # wireguard port
   - { zone: dmz, port: "{{ security_general_ssh_port }}/tcp", state: enabled } # ssh
   - { zone: public, port: "41641/udp", state: enabled } # wireguard port
