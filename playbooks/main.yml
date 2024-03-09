@@ -23,6 +23,10 @@
   ansible.builtin.import_playbook: pcspkr.yml
   tags: pcspkr
 
+- name: Import playbook pip.
+  ansible.builtin.import_playbook: pip.yml
+  tags: pip
+
 - name: Import playbook mount.
   ansible.builtin.import_playbook: mount.yml
   tags: mount

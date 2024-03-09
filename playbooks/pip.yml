@@ -1,0 +1,20 @@
+---
+- name: Install pip packages.
+  hosts: workstation
+
+  tasks:
+    - name: Run tasks for user {{ user }}.
+      become: true
+      become_user: "{{ user }}"
+      block:
+        - name: Ensure venv directory exists.
+          ansible.builtin.file:
+            state: directory
+            mode: "0755"
+            path: "{{ pip_virtualenv }}"
+
+        - name: Ensure pip packages are installed.
+          ansible.builtin.pip:
+            virtualenv: "{{ pip_virtualenv }}"
+            virtualenv_command: "{{ pip_virtualenv_command }}"
+            name: "{{ pip_packages }}"
