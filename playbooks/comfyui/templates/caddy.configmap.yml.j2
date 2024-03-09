@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddy-comfy-caddy
+data:
+  Caddyfile: |
+    http://ctn {
+        reverse_proxy 0.0.0.0:8188
+    }

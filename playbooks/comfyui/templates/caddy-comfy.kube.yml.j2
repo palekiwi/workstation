@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: "{{ caddy_comfy_pod_name }}"
+  name: "{{ caddy_comfy_pod_name }}"
+spec:
+  containers:
+    - name: caddy
+      image: docker.io/library/caddy:latest
+      volumeMounts:
+        - mountPath: /etc/caddy
+          name: "{{ caddy_comfy_pod_name }}-caddy"
+          readOnly: true
+  restartPolicy: OnFailure
+  volumes:
+    - name: "{{ caddy_comfy_pod_name }}-data"
+      persistentVolumeClaim:
+        claimName: "{{ caddy_comfy_pod_name }}-data"
+    - name: "{{ caddy_comfy_pod_name }}-caddy"
+      configMap:
+        defaultMode: 420
+        name: "{{ caddy_comfy_pod_name }}-caddy"

@@ -3,7 +3,7 @@ security_general_ansible_user: ansible
 
 security_general_automatic_updates: false
 
-security_general_ip_unpriviledged_port_start: 1024
+security_general_ip_unpriviledged_port_start: 80
 
 security_general_ssh_port: 438
 

@@ -4,14 +4,16 @@
 
   vars:
     ansible_user: pl
-    comfyui_venv: ~/.venv/fedora/sd-gui
+    comfyui_venv: /home/pl/.venv/fedora/sd-gui
     comfyui_repo: https://github.com/comfyanonymous/ComfyUI
-    comfyui_dir: ~/opt/comfy-ui
+    comfyui_dir: /opt/comfyui
     comfyui_models:
       - key: checkpoints
-        value: /opt/models/checkpoints/
+        value: /opt/models/sd/checkpoints/
       - key: vae
-        value: /opt/models/vae/
+        value: /opt/models/sd/vae/
+      - key: upscale_models
+        value: /opt/models/sd/upscale_models/
 
   tasks:
     - name: Ensure repos have been cloned.
@@ -52,3 +54,9 @@
         virtualenv: "{{ comfyui_venv }}"
         virtualenv_command: /usr/bin/python -m venv
         requirements: "{{ comfyui_dir }}/requirements.txt"
+
+    - name: Install systemd service template.
+      ansible.builtin.template:
+        src: templates/comfyui.service.j2
+        dest: ~/.config/systemd/user/comfyui.service
+        mode: "0644"

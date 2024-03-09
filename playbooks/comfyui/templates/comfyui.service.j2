@@ -1,0 +1,11 @@
+[Unit]
+Description=ComfyUI
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart={{ comfyui_venv }}/bin/python {{ comfyui_dir }}/main.py --listen
+
+[Install]
+WantedBy=multi-user.target
