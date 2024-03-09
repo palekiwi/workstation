@@ -1,3 +1,3 @@
 ---
 flatpak_packages_host:
-  - com.valvesoftware.Steam
+  - { state: present, method: user, remote: flathub, filesystem: home, name: com.valvesoftware.Steam }
