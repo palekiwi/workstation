@@ -4,6 +4,8 @@ dotfiles_repo_version: main
 dotfiles_repo_accept_hostkey: true
 
 dotfiles_files:
+  - { label: "ansible.inventory", dest: "~/.inventory.ini", src: "fedora/ansible/inventory.ini" }
+  - { label: "ansible.config", dest: "~/.ansible.cfg", src: "fedora/ansible/ansible.cfg" }
   - { label: "awesome.autostart", dest: "~/.config/awesome/autostart.sh", src: "fedora/config/awesome/{{ ansible_hostname }}.autostart.sh" }
   - { label: "awesome.clientbuttons", dest: "~/.config/awesome/clientbuttons.lua", src: "fedora/config/awesome/clientbuttons.lua" }
   - { label: "awesome.clientkeys", dest: "~/.config/awesome/clientkeys.lua", src: "fedora/config/awesome/clientkeys.lua" }
@@ -34,6 +36,7 @@ dotfiles_files:
   - { label: "picom.conf", dest: "~/.config/picom/picom.conf", src: "fedora/config/picom/picom.conf" }
   - { label: "sxhkdrc", dest: "~/.config/sxhkd/sxhkdrc", src: "fedora/config/sxhkd/sxhkdrc" }
   - { label: "sxhkdrc.blender", dest: "~/.config/sxhkd/blender.sxhkdrc", src: "fedora/config/sxhkd/blender.sxhkdrc" }
+  - { label: "sxhkdrc.comfyui", dest: "~/.config/sxhkd/comfyui.sxhkdrc", src: "fedora/config/sxhkd/comfyui.sxhkdrc" }
   - { label: "sxhkdrc.dmenu", dest: "~/.config/sxhkd/dmenu.sxhkdrc", src: "fedora/config/sxhkd/dmenu.sxhkdrc" }
   - { label: "terminal.rc", dest: "~/.config/xfce4/terminal/terminalrc", src: "fedora/config/xfce4/terminal/{{ ansible_hostname }}.terminalrc" }
   - { label: "terminal.theme", dest: "~/.config/xfce4/terminal/colorschemes/arc.theme", src: "fedora/config/xfce4/terminal/colorschemes/arc.theme" }
