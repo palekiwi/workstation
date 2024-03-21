@@ -13,3 +13,4 @@ comfyui_custom_nodes:
   - { name: comfyui_controlnet_aux, repo: "https://github.com/Fannovel16/comfyui_controlnet_aux", version: main }
   - { name: comfyui_segment_anything, repo: "https://github.com/storyicon/comfyui_segment_anything", version: main }
   - { name: efficiency-nodes-comfyui, repo: https://github.com/jags111/efficiency-nodes-comfyui, version: main }
+  - { name: ComfyUI_Dave_CustomNode, repo: "https://github.com/Davemane42/ComfyUI_Dave_CustomNode", version: main }
