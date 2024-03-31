@@ -6,5 +6,7 @@ flatpak_packages:
   - { state: present, method: user, remote: flathub, filesystem: home, name: org.inkscape.Inkscape }
   - { state: present, method: user, remote: flathub, filesystem: home, name: org.kde.okular }
   - { state: present, method: user, remote: flathub, filesystem: home, name: org.mozilla.Thunderbird }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.mozilla.firefox }
   - { state: present, method: user, remote: flathub, filesystem: home, name: org.signal.Signal }
   - { state: present, method: user, remote: flathub, filesystem: home, name: org.videolan.VLC }
+  - { state: present, method: user, remote: flathub, name: org.pulseaudio.pavucontrol}
