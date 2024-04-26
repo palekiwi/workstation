@@ -6,3 +6,5 @@ ollama_dir: /opt/models/ollama
 ollama_models:
   - name: llama2
     state: present
+  - name: llama3:8b
+    state: present
