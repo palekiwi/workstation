@@ -1,3 +1,8 @@
 ---
 flatpak_packages_host:
   - { state: present, method: user, remote: flathub, name: com.valvesoftware.Steam }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.gimp.GIMP }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.goldendict.GoldenDict }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.inkscape.Inkscape }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.kde.krita }
+  - { state: present, method: user, remote: flathub, filesystem: home, name: org.mozilla.Thunderbird }
