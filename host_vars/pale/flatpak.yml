@@ -1,3 +1,4 @@
 ---
 flatpak_packages_host:
   - { state: present, method: user, remote: flathub, name: com.nextcloud.desktopclient.nextcloud }
+  - { state: present, method: user, remote: flathub, name: rest.insomnia.Insomnia }
