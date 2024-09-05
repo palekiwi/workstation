@@ -3,12 +3,14 @@ ostree_packages:
   - awesome
   - distrobox
   - dmenu
+  - kitty
   - pam-u2f
   - pamu2fcfg
-  - pulseaudio-utils
   - picom
+  - pulseaudio-utils
   - sxhkd
+  - tailscale
   - xfce4-terminal
   - xrandr
-  - tailscale
   - xscreensaver
+  - zsh
