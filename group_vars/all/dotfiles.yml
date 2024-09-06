@@ -22,24 +22,9 @@ dotfiles_files:
   - { label: "bash_aliases", dest: "/home/pl/.bash_aliases", src: "fedora/bash_aliases" }
   - { label: "bashenv", dest: "/home/pl/.bashenv", src: "fedora/bashenv" }
   - { label: "bashrc", dest: "/home/pl/.bashrc", src: "fedora/bashrc" }
-  - { label: "dmenu.dir", dest: "/home/pl/.dmenu/dir", src: "fedora/dmenu/dmenu_dir.sh" }
-  - { label: "dmenu.dotfiles", dest: "/home/pl/.dmenu/dotfiles", src: "fedora/dmenu/dmenu_dotfiles.sh" }
-  - { label: "dmenu.keybindings", dest: "/home/pl/.dmenu/keybindings", src: "fedora/dmenu/dmenu_sxhkd.sh" }
-  - { label: "dmenu.mindmaps", dest: "/home/pl/.dmenu/mindmaps", src: "fedora/dmenu/dmenu_mindmaps.sh" }
-  - { label: "dmenu.process", dest: "/home/pl/.dmenu/process", src: "fedora/dmenu/dmenu_process.sh" }
-  - { label: "dmenu.quit", dest: "/home/pl/.dmenu/quit", src: "fedora/dmenu/dmenu_quit.sh" }
-  - { label: "dmenu.repos", dest: "/home/pl/.dmenu/repos", src: "fedora/dmenu/dmenu_repos.sh" }
-  - { label: "dmenu.sys", dest: "/home/pl/.dmenu/sys", src: "fedora/dmenu/dmenu_sys.sh" }
-  - { label: "dmenu.xrandr", dest: "/home/pl/.dmenu/xrandr", src: "fedora/dmenu/dmenu_xrandr.sh" }
   - { label: "gpg-agent", dest: "/home/pl/.gnupg/gpg-agent.conf", src: "fedora/gpg-agent.conf" }
   - { label: "mimeapps", dest: "/home/pl/.config/mimeapps.list", src: "fedora/config/mimeapps.list" }
   - { label: "picom.conf", dest: "/home/pl/.config/picom/picom.conf", src: "fedora/config/picom/picom.conf" }
-  - { label: "sxhkdrc", dest: "/home/pl/.config/sxhkd/sxhkdrc", src: "fedora/config/sxhkd/sxhkdrc" }
-  - { label: "sxhkdrc.blender", dest: "/home/pl/.config/sxhkd/blender.sxhkdrc", src: "fedora/config/sxhkd/blender.sxhkdrc" }
-  - { label: "sxhkdrc.comfyui", dest: "/home/pl/.config/sxhkd/comfyui.sxhkdrc", src: "fedora/config/sxhkd/comfyui.sxhkdrc" }
-  - { label: "sxhkdrc.dmenu", dest: "/home/pl/.config/sxhkd/dmenu.sxhkdrc", src: "fedora/config/sxhkd/dmenu.sxhkdrc" }
-  - { label: "terminal.rc", dest: "/home/pl/.config/xfce4/terminal/terminalrc", src: "fedora/config/xfce4/terminal/{{ ansible_hostname }}.terminalrc" }
-  - { label: "terminal.theme", dest: "/home/pl/.config/xfce4/terminal/colorschemes/darc.theme", src: "fedora/config/xfce4/terminal/colorschemes/darc.theme" }
   - { label: "xmodmap", dest: "/home/pl/.Xmodmap", src: "fedora/{{ ansible_hostname }}.Xmodmap" }
 
 dotfiles_extra_repos:
